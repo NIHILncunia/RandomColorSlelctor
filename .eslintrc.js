@@ -1,31 +1,31 @@
 module.exports = {
-  'root': true,
-  'env': {
-    'browser': true,
-    'commonjs': true,
-    'es6': true,
-    'node': true,
+  root: true,
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true,
   },
-  'extends': [
+  extends: [
     'eslint:recommended',
     'plugin:react/recommended',
   ],
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly',
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
   },
-  'parserOptions': {
-    'ecmaVersion': 2020,
-    'sourceType': 'module',
-    'ecmaFeatures': {
-      'jsx': true,
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
     },
   },
-  'plugins': [
+  plugins: [
     'import',
     'react-hooks',
   ],
-  'rules': {
+  rules: {
     'no-console': 0,
     'no-unused-vars': 1,
     'no-unexpected-multiline': 0,
