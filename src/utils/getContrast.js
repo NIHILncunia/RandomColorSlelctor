@@ -4,7 +4,7 @@ const getContrast = (hexcolor) => {
 	const b = parseInt(hexcolor.substr(4, 2), 16);
   const contrast = ((r * 299) + (g * 587) + (b * 114)) / 1000;
   
-	return (contrast >= 128) ? '#000000' : '#ffffff';
+	return (contrast >= 128) ? '#000000' : '#FFFFFF';
 };
 
 export default getContrast;
