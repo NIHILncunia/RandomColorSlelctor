@@ -1,57 +1,52 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import getContrast from '@utils/getContrast';
-import { css } from '@emotion/react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import CopyButton from '@components/CopyButton';
 
-const ColorDisplay = ({ color, }) => {
-  const [ message, setMessage, ] = useState('');
+const ColorDisplay = ({ color, colors, setColors, }) => {
+  const [ isCopy, setIsCopy, ] = useState(false);
 
   const onEnterColor = useCallback(() => {
-    setMessage(<p>클릭하면<br />HEX 복사</p>);
+    setIsCopy(true);
   }, []);
 
   const onLeaveColor = useCallback(() => {
-    setMessage(<p></p>);
+    setIsCopy(false);
   }, []);
 
-  const onClickCopy = useCallback(() => {
-    setMessage(<p>복사 완료</p>);
+  const colorStyle = {
+    background: `#${color.hex}`,
+    color: getContrast(color.hex),
+  };
+
+  const onClickDelete = useCallback(() => {
+    const id = color.id;
+
+    setColors((prev) => prev.filter(item => id !== item.id));
   }, []);
-
-  const item = css`
-    background-color: #${color.hex};
-    color: ${getContrast(color.hex)};
-    text-align: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    font-weight: 900;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: center;
-    font-size: 1.5em;
-    user-select: none;
-  `;
-
-  const flex = css`
-    flex: 1;
-    display: flex;
-    align-items: center;
-  `;
 
   return (
-    <CopyToClipboard text={`#${color.hex}`}>
-      <div css={item} onMouseEnter={onEnterColor} onMouseLeave={onLeaveColor} onClick={onClickCopy}>
-        <p css={flex}>#{ color.hex }</p>
-        {message}
-      </div>
-    </CopyToClipboard>
+    <div className='color-item' style={colorStyle} onMouseEnter={onEnterColor} onMouseLeave={onLeaveColor}>
+      <p className='item'>#{ color.hex }</p>
+      
+      {
+        isCopy
+        ? (
+          <>
+            <button className='delete-button' onClick={onClickDelete}>삭제</button>
+            <CopyButton color={color} />
+          </>
+        )
+        : ''
+      }
+    </div>
   );
 };
 
 ColorDisplay.propTypes = {
   color: PropTypes.object.isRequired,
+  colors: PropTypes.array.isRequired,
+  setColors: PropTypes.func.isRequired,
 };
 
 // node: PropTypes.node.isRequired,
